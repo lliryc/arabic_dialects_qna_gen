@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "arabic-dialects-qna-gen"
+version = "0.1.0"
+description = "Arabic Dialects Q&A Generation Project"
+authors = ["Kirill Chirkunov <kirill.chirkunov@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+pytimeparse = "^1.1.8"
+timeparse-plus = "^1.2.0"
+tqdm = "^4.67.1"
+setuptools = ">=70.0.0"
+cython = "^3.0.11"
+numpy = ">=1.22,<2"
+omegaconf = "^2.3.0"
+langchain = "^0.3.15"
+google-cloud-aiplatform = "^1.78.0"
+langchain-core = "^0.3.31"
+python-dotenv = "^1.0.1"
+langchain-openai = "^0.3.1"
+langchain-google-genai = "^2.0.9"
+langchain-anthropic = "^0.3.4"
+pyarabic = "^0.6.15"
+google-api-python-client = "^2.161.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
+fasttext = "^0.9.3"
+emoji = "^2.14.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
