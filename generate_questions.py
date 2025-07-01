@@ -11,7 +11,7 @@ import random
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-
+from agent_question_builder import QuestionBuilder
 
 load_dotenv()
 
@@ -62,7 +62,7 @@ Question:
 #llm_client = ChatOpenAI(model="gpt-4o", temperature=0.7, api_key=OPENAI_API_KEY)
 llm_client = ChatOpenAI(model="o3", api_key=OPENAI_API_KEY)
 
-TEMPLATE_ID = "1cefLNvUdyPEeHDkbW14bva1y0VaFlEYI2aN-opmJzro"
+TEMPLATE_ID = "10LUCJ6xyZjUgn6RM80em1B5duRw2dK5Eizd3EQXI7xY"
 
 SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -109,43 +109,36 @@ if __name__ == "__main__":
     files = glob.glob("egy_passages/*.txt")
     files.sort()
     total_files = len(files)
+    
     for i, file in tqdm(enumerate(files), total=total_files, desc="Questions Generation"):
         with open(file, "r") as f:
             passage = f.read()
             # Remove content up to and including first double newline
             passage = passage.split('\n\n', 1)[-1]
+        question_builder = QuestionBuilder(passage, "Egyptian Arabic", "Egyptian Arabic", "Modern Standard Arabic")
+        results = question_builder.build_qna()
+        print(results)
         
 #        set_cell_value(f"A{i+2}", passage)
         
-#        easy_question = run_prompt(easy_prompt, passage)
-#       if easy_question is not None:
-#           set_cell_value(f"C{i+2}", easy_question)
-#        else:
-#            set_cell_value(f"C{i+2}", "N/A")
-       
-#        moderate_question = run_prompt(moderate_prompt, passage)
-#        if moderate_question is not None:
-#            set_cell_value(f"E{i+2}", moderate_question)
-#        else:
-#            set_cell_value(f"E{i+2}", "N/A")
-        
-#        challenging_question = run_prompt(challenging_prompt, passage)
-#        if challenging_question is not None:
-#            set_cell_value(f"G{i+2}", challenging_question)
-#        else:
-#            set_cell_value(f"G{i+2}", "N/A")
-            
-#        moderate_question = run_prompt(moderate_prompt, passage)
-#        if moderate_question is not None:
-#            set_cell_value(f"E{i+2}", moderate_question)
-#        else:
-#            set_cell_value(f"E{i+2}", "N/A")
-
-        easy_question = run_prompt(easy_prompt, passage)
+        easy_question = results[2]["Question"]
         if easy_question is not None:
-            set_cell_value(f"C{i+2}", easy_question)
+            set_cell_value(f"M{i+2}", easy_question)
         else:
-            set_cell_value(f"C{i+2}", "N/A")
+            set_cell_value(f"M{i+2}", "N/A")
+       
+        moderate_question = results[1]["Question"]
+        if moderate_question is not None:
+            set_cell_value(f"O{i+2}", moderate_question)
+        else:
+            set_cell_value(f"O{i+2}", "N/A")
+        
+        challenging_question = results[0]["Question"]
+        if challenging_question is not None:
+            set_cell_value(f"Q{i+2}", challenging_question)
+        else:
+            set_cell_value(f"Q{i+2}", "N/A")
+            
 
         time.sleep(random.randint(5, 10))
 
