@@ -16,10 +16,6 @@ from agent_question_builder import QuestionBuilder
 
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
-model = ChatOpenAI(model="o3", api_key=OPENAI_API_KEY)
-
 text = """
 MR AND MRS Brown first met Paddington on a railway platform. 
 In fact, that was how he came to have such an unusual name for a bear, for Paddington was the name of the station. 
@@ -35,81 +31,9 @@ There's also lots of fibre in apples, largely pectin, which reduces the amount o
 
 These nutrients in apples do seem to offer health benefits. A 2017 review of five studies reported that eating apples is associated with an 18% reduction in the risk of developing type 2 diabetes. Another review from 2022, which analysed 18 studies, found that eating more apples, or apple-derived foods such as apple juice, can reduce cholesterol, if you sustain the habit for more than one week.
 """
-
-# recommendation: use only knowledge, not a common sense
-initial_prompt = ChatPromptTemplate.from_template("""You are a Logic & Reasoning teacher.  
-Generate difficult follow-up question with proper answer, based on the text below.  
-Don't provide context as it is already given in the text. 
-Question must be one sentence only and not have introductory or "given" section. 
-Answer must be short (no more than 3 words). 
-To answer a question, reader must perform reasoning steps, using the knowledge from the text and that is typically expected from a high school graduate.
-Do not rely on specialized university-level knowledge, advanced academic concepts, or expert-level details.
-
-Return your response in the following JSON format:
-{{
-  "Question": "your question",
-  "Answer": "your answer"
-}}
-
-Text:
---------------------------------
-{text}
---------------------------------
-""")
-
-def run_initial_prompt(text):
-    chain = initial_prompt | model
-    try:
-        res = chain.invoke({"text": text})  
-    except Exception as e:
-        print(e)
-        return None
-   
-    return json.loads(res.content)
-  
   
 # add constraints
 # add multiple objectives
-
-judgement_prompt = ChatPromptTemplate.from_template("""You are LLM judge. 
-Score the difficulty of the question (from 1 [very easy to answer] to 100 [extremely hard to answer]) based on the text and provide recommendation on how to improve the difficulty using knowledge from the text only if score is less than 50. 
-Otherwise, just return "None" for recommendation.
-
-Return your response in the following JSON format:
-{{
-  "Score": "integer number from 1 to 100",
-  "Recommendation": "recommendation text or None"
-}}
-
-Text:
---------------------------------
-{text}
---------------------------------
-
-Question:
-{question}
-""")
-
-def run_judgement_prompt(text, question):
-    chain = judgement_prompt | model
-    try:
-        res = chain.invoke({"text": text, "question": question})  
-    except Exception as e:
-        print(e)
-        return None
-    return json.loads(res.content)
-
-
-
-def run_improvement_prompt(text, question, recommendation):
-    chain = improvement_prompt | model
-    try:
-        res = chain.invoke({"text": text, "question": question, "recommendation": recommendation})  
-    except Exception as e:
-        print(e)
-        return None
-
-    return json.loads(res.content)
 
 if __name__ == "__main__":
   question_builder = QuestionBuilder(text, "English", "English", "English")

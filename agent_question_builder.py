@@ -16,13 +16,15 @@ question_types = ["easy", "moderate", "challenging"]
 
 
 challenging_initial_prompt = ChatPromptTemplate.from_template("""You are a Logic & Reasoning teacher.  
-Generate difficult follow-up non-opinionated question in {question_language} with proper answer in {answer_language}, based on the text below written in {passage_language}.  
+
+Generate a difficult follow-up non-opinionated question in {question_language} with a concise, unambiguous answer in {answer_language}, based on the text below written in {passage_language}.  
 Don't provide context as it is already given in the text. 
 Question must be one sentence only and not have introductory or "given" section. 
 Keep the question short and concise (no more than 16 words).
 Answer must be short (no more than 3 words). 
 To answer a question, reader must perform reasoning steps, using the knowledge from the text and that is typically expected from a high school graduate.
 Do not rely on specialized university-level knowledge, advanced academic concepts, or expert-level details.
+
 
 Return your response in the following JSON format:
 {{
@@ -43,15 +45,17 @@ Question:
 {question}
 """)
 
-improvement_prompt = ChatPromptTemplate.from_template("""You are a Logic & Reasoning teacher.  
-Improve difficulty of your reading comprehension question in {question_language} with proper answer in {answer_language} based on the text written in {passage_language} following the recommendation below. Keep the question short and concise (no more than 16 words).
-Use only knowledge from the text to answer the question and high school level knowledge. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
+improvement_prompt = ChatPromptTemplate.from_template("""You are a Logic & Reasoning teacher. 
+
+Improve difficulty of your reading comprehension non-opinionated question in {question_language} with a precise, unambiguous answer in {answer_language} based on the text written in {passage_language} following the recommendation below. Keep the question short and concise (no more than 16 words).
+Use knowledge from the text to answer the question and high school level knowledge. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
+Question should rely on the specific facts from the text and not only on the general knowledge.
 Answer must be short (no more than 3 words).
   
 Return your response in the following JSON format:
 {{
-  "Question": "your difficult follow-up question or N/A",
-  "Answer": "your short answer or N/A"
+  "Question": "your difficult follow-up question in {question_language} or N/A",
+  "Answer": "your short answer in {answer_language} or N/A"
 }}
 
 Text:
@@ -73,12 +77,11 @@ Nice to have:
 """)
 
 easy_initial_prompt = ChatPromptTemplate.from_template("""
-You need to generate reading comprehension non-opinionated question in {question_language} with proper answer in {answer_language} based on the text written in {passage_language}. 
-This question should focus on understanding and interpreting the passage, and it must be possible to infer the answers to this question from the text and not rely on external knowledge or one's opinion.
-Question description: a straightforward question based on explicit information in the text. 
-The answer is usually found in a single sentence or a clearly stated portion of the text. Little to no interpretation is needed; the task mostly requires finding a specific word or phrase. 
-IMPORTANT: You response must contain the question and answer only or 'N/A' if question can not be created. If you include any other text, you get fined 1000$ per word.
-IMPORTANT: You must not use the similar question as the existing questions. if you do, you get fined 1000$ per word.
+You need to generate a reading comprehension non-opinionated question in {question_language} along with a precise and unambiguous answer in {answer_language} that is based on the text written in {passage_language}. 
+Formulate the question strictly in the third person. This question should be based on understanding and interpreting the passage, and it must be possible to find the answers to this question in the text and not rely on inference, on external knowledge or one's opinion.
+The answer is usually found in a single sentence or a clear portion of the text. The task mostly requires finding a specific word or phrase. 
+IMPORTANT: Your response must contain the question and answer only or 'N/A' if the question can not be created. If you include any other text, you get fined 1000$ per word.
+IMPORTANT: You must not use a question similar to the existing questions. If you do, you get fined 1000$ per word.
 Keep the question short and concise (no more than 16 words).
 Answer must be short (no more than 3 words). 
 
@@ -96,15 +99,16 @@ Existing questions:
 """)
 
 moderate_initial_prompt = ChatPromptTemplate.from_template("""
-You need to generate reading comprehension non-opinionated question in {question_language} with proper answer in {answer_language} based on the passage written in {passage_language}. 
-This question should focus on understanding and interpreting the passage, and it must be possible to infer the answers to this question from the passage and not rely on external knowledge or one's opinion.
-Question description: A question that requires some understanding and interpretation of the text.
-The reader needs to connect pieces of information or track the order of events.
+You need to generate a reading comprehension non-opinionated question in {question_language} along with a precise, unambiguous  answer in {answer_language} based on the passage written in {passage_language}. 
+Formulate the question strictly in the third person. This question should be based on understanding and interpreting the passage, and it must be possible to infer the answers to this question from the passage, partly using external knowledge which is typically expected from a high school graduate.
+Question description: A question that requires solid understanding and interpretation of the text.
+Pieces of information need to be connected or the order of events need to be tracked in order to answer the question.
 IMPORTANT: The question must be paraphrased and should NOT use the exact same words or phrases directly from the passage. Rephrase the content in your own words while maintaining the same meaning.
 IMPORTANT: You must not use the similar question as the existing questions. if you do, you get fined 1000$ per word.
-You response must contain the question and answer only or 'N/A' if question can not be created. If you include any other text, you get fined 1000$ per word.
+Your response must contain the question and answer only or 'N/A' if question can not be created. If you include any other text, you get fined 1000$ per word.
 Keep the question short and concise (no more than 16 words).
 Answer must be short (no more than 3 words). 
+
 
 Passage:
 {passage}
@@ -118,8 +122,6 @@ Return your response in the following JSON format:
 Existing questions:
 {existing_questions}
 """)
-
-
 
 
 class QuestionBuilder:
@@ -196,7 +198,7 @@ class QuestionBuilder:
       final_question = None
       final_answer = None
       
-      for i in range(iteration_limit):
+      for _ in range(iteration_limit):
         judgement = self.judge.run_challenging_eval_prompt(question)
         if judgement is None:
           print("No judgement generated")
@@ -245,10 +247,13 @@ class QuestionBuilder:
     
     def build_qna(self):
 
-        challenging_question, challenging_answer = self.build_qna_in_multiple_steps()
+        #challenging_question, challenging_answer = self.build_qna_in_multiple_steps()
         results = []
-        results.append({"Question": challenging_question, "Answer": challenging_answer})
-        self.existing_questions.append(challenging_question)
+        results.append({"Question": "N/A", "Answer": "N/A"})
+        #results.append({"Question": challenging_question, "Answer": challenging_answer})
+               
+        #self.existing_questions.append(challenging_question)
+        
         
         moderate_question, moderate_answer = self.build_qna_in_single_step("moderate")
         results.append({"Question": moderate_question, "Answer": moderate_answer})

@@ -55,7 +55,7 @@ if __name__ == "__main__":
 
   llm = ChatGoogleGenerativeAI(
       model="gemini-2.5-pro",
-      temperature=0.7,
+      temperature=0.3,
       max_tokens=None,
       timeout=None,
       max_retries=2,
@@ -82,18 +82,19 @@ def run_json_prompt(prompt, passage, dialect):
         return None
    
     return res
-  
 
-def set_cell_value(cell, value):
-    creds = None
+def get_cell_value(service, cell, spreadsheet_id):
     try:
-        # Load credentials from service account file
-        creds = service_account.Credentials.from_service_account_file(
-            'google_api_credentials2.json', scopes=SCOPES)
+        # Call the Sheets API to get the value of the cell
+        sheet = service.spreadsheets()
+        result = sheet.values().get(spreadsheetId=spreadsheet_id, range=f'QnA!{cell}').execute()
+        return result.get('values', [[None]])[0][0]
+    except HttpError as err:
+        print(f"An error occurred: {err}")
+        return None
 
-        # Build the Sheets API service
-        service = build('sheets', 'v4', credentials=creds)
-
+def set_cell_value(service, cell, value):
+    try:
         # Call the Sheets API to set the value of the cell
         sheet = service.spreadsheets()
         result = sheet.values().update(
@@ -108,20 +109,12 @@ def set_cell_value(cell, value):
         print(f"An error occurred: {err}")
         return None
 
-def set_row_value(cell, value):
-    creds = None
+def set_row_value(service, cell, value, spreadsheet_id):
     try:
-        # Load credentials from service account file
-        creds = service_account.Credentials.from_service_account_file(
-            'google_api_credentials2.json', scopes=SCOPES)
-
-        # Build the Sheets API service
-        service = build('sheets', 'v4', credentials=creds)
-
         # Call the Sheets API to set the value of the cell
         sheet = service.spreadsheets()
         result = sheet.values().update(
-            spreadsheetId=TEMPLATE_ID,
+            spreadsheetId=spreadsheet_id,
             range=f'QnA!{cell}',
             valueInputOption="USER_ENTERED",
             body={"values": [[value]]}
@@ -132,8 +125,7 @@ def set_row_value(cell, value):
         print(f"An error occurred: {err}")
         return None
 
-def set_eval_result(row, result):
-    creds = None
+def set_eval_result(service, row, result, spreadsheet_id):
     data = []
     result_map = {
         "toxic": "C",
@@ -150,38 +142,40 @@ def set_eval_result(row, result):
     for key, value in result.items():
         data.append({'range': f'QnA!{result_map[key]}{row}', 'values': [[str(value)]]})
     try:
-        # Load credentials from service account file
-        creds = service_account.Credentials.from_service_account_file(
-            'google_api_credentials2.json', scopes=SCOPES)
-
-        # Build the Sheets API service
-        service = build('sheets', 'v4', credentials=creds)
 
         # Call the Sheets API to set the value of the cell
         sheet = service.spreadsheets()
         sheet.values().batchUpdate(
-            spreadsheetId=TEMPLATE_ID,
+            spreadsheetId=spreadsheet_id,
             body={"valueInputOption": "RAW", "data": data}
         ).execute()
     except HttpError as err:
         print(f"An error occurred: {err}")
 
 if __name__ == "__main__":
-    files = glob.glob("egy_passages/*.txt")
-    files.sort()
-    total_files = len(files)
-    for i, file in tqdm(enumerate(files), total=total_files, desc="Questions Generation"):
-        with open(file, "r") as f:
-            passage = f.read()
-            set_cell_value(f"A{i+2}", passage)
-            # Remove content up to and including first double newline
-            passage = passage.split('\n\n', 1)[-1]
+  
+    # Load credentials from service account file
+    creds = service_account.Credentials.from_service_account_file(
+      'google_api_credentials2.json', scopes=SCOPES)
 
-        result = run_json_prompt(passage_eval_prompt, passage, "Egyptian Arabic")
+    # Build the Sheets API service
+    service = build('sheets', 'v4', credentials=creds)
+
+    for i in tqdm(range(100), desc="Censorship"):
+
+        passage = get_cell_value(service, f"A{i+2}", TEMPLATE_ID)
+        
+        # Skip the first line of the passage
+        if passage and '\n\n' in passage:
+            passage = '\n\n'.join(passage.split('\n\n')[1:])
+        
+
+        result = run_json_prompt(passage_eval_prompt, passage, "Emirati Arabic")
+        
         if result is not None:
-            set_eval_result(i+2, result)
+            set_eval_result(service, i+2, result, TEMPLATE_ID)
         else:
-            set_row_value(i+2, "N/A")
+            set_row_value(service, f"C{i+2}", "N/A", TEMPLATE_ID)
 
         time.sleep(random.randint(5, 10))
 

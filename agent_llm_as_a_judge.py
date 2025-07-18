@@ -93,6 +93,7 @@ Provide evaluation strictly in JSON:
   "Complexity_reason": "string",          // string, reason for the complexity
   "Opinionated": false|true,            // boolean
   "Opinionated_reason": "string",      // string, reason for the opinionated
+  "Ambiguous": false|true,            // boolean
   "Biased": false|true,                 // boolean
   "Biased_reason": "string",          // string, reason for the biased
   "NonAnswerable": false|true,          // boolean
