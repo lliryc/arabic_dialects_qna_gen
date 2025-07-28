@@ -28,7 +28,7 @@ Try to minimise the use of the exact same words or phrases directly from the pas
 You must not use a question similar to the previous questions. The answer to the question should not be the same as the answer to previous questions.
 Your response must contain the question and answer only or 'N/A' if the question can not be created.
 Keep the question short and concise (no more than 16 words).
-The answer must be short (no more than 4 words). 
+The answer must be short, precise and unambiguous. 
 
 Return your response in the following JSON format:
 {{
@@ -70,13 +70,12 @@ Boolean dimensions (True/False):
 - NoHighLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
 - IsShortQuestion: The question is 16 words or fewer.
-- IsPreciseAnswer: The answer does not contain unnecessary details or irrelevant information.
-- IsShortAnswer: The answer is short (no more than 4 words).
 
-Return your response in the following JSON format. Keep answer precise and short or you will be penalized $1000 per word. If the question is impossible to fix, return 'N/A'.
+
+Return your response in the following JSON format. Keep answer precise, unambiguous and short or you will be penalized $1000 per word. If the question is impossible to fix, return 'N/A'.
 {{
   "Question": "The improved question in {question_language} or N/A",
-  "Answer": "The improved answer in {answer_language} or N/A"
+  "Answer": "The improved precise, unambiguous and short answer in {answer_language} or N/A"
 }}
 
 INPUT: 
