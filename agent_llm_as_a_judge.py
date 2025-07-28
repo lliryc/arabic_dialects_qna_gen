@@ -30,7 +30,7 @@ Also, label these quality and formatting dimensions (True/False):
 - IsInThirdPerson: The question is phrased strictly in the third person.
 - NoHighLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
-- IsShortAndPreciseQuestion: The question is 5 words or fewer.
+- IsShortAndPreciseQuestion: The question is 16 words or fewer.
 - IsShortAndPreciseAnswer: The answer is 5 words or fewer without unnecessary details or irrelevant information.
 
 
