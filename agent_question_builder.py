@@ -22,7 +22,7 @@ This question should be based on understanding and interpreting the passage.
 It must be possible to infer the answers to this question from the passage.
 In order to answer the question, pieces of information in the passage might need to be connected or the order of events need to be tracked.
 
-IMPORTANT:The correct answer must be derived through inference or reasoning, but not explicitly found in a span of the text. It can be derived partly through external knowledge of high school level in {country} that is not present in the passage.
+IMPORTANT:The correct answer must be derived through inference or reasoning, but never verbatim copy from a single text span. It can be derived partly through external knowledge of high school level in {country} that is not present in the passage.
 
 Try to minimise the use of the exact same words or phrases directly from the passage when generating the question. The question should be a rephrasing of parts of the passage content that maintains the original meaning.
 You must not use a question similar to the previous questions. The answer to the question should not be the same as the answer to previous questions.
@@ -65,7 +65,7 @@ Boolean dimensions (True/False):
 - IsUnbiased: The question is free from prejudice.
 - IsAnswerable: The question can be answered from the text with the allowed outside knowledge.
 - IsRelevant: The question is clearly related to the passage's content.
-- AnswerNotInSpan: The answer is correctly derived through inference, not just copied from a single text span.
+- AnswerNotInSpan: The answer is correctly derived through inference, NOT a verbatim copy from a single text span.
 - IsInThirdPerson: The question is phrased strictly in the third person.
 - NoHighLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
@@ -73,7 +73,7 @@ Boolean dimensions (True/False):
 - IsPreciseAnswer: The answer does not contain unnecessary details or irrelevant information.
 - IsShortAnswer: The answer is short (no more than 4 words).
 
-Return your response in the following JSON format. If the question is impossible to fix, return 'N/A'.
+Return your response in the following JSON format. Keep answer precise and short or you will be penalized $1000 per word. If the question is impossible to fix, return 'N/A'.
 {{
   "Question": "The improved question in {question_language} or N/A",
   "Answer": "The improved answer in {answer_language} or N/A"
