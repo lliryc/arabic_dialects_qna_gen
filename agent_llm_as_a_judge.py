@@ -28,10 +28,10 @@ Also, label these quality and formatting dimensions (True/False):
 - IsRelevant: The question is clearly related to the passage's content.
 - AnswerNotInSpan: The answer is correctly derived through inference, not just copied from a single text span.
 - IsInThirdPerson: The question is phrased strictly in the third person.
-- HasLowLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
+- NoHighLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
-- IsConciseQuestion: The question is 16 words or fewer.
-- IsConciseAnswer: The answer is short and to the point.
+- IsShortQuestion: The question is 16 words or fewer.
+- IsPreciseAnswer: The answer does not contain unnecessary details or irrelevant information.
 
 Include recommendations:
 Critical: If any of the checks for boolean dimensions are false, describe how to fix it. 
@@ -56,14 +56,14 @@ Output your evaluation strictly as the following JSON schema. Return only the JS
   "AnswerNotInSpan_reason": "string",
   "IsInThirdPerson": true|false,
   "IsInThirdPerson_reason": "string",
-  "HasLowLexicalOverlap": true|false,
-  "HasLowLexicalOverlap_reason": "string",
+  "NoHighLexicalOverlap": true|false,
+  "NoHighLexicalOverlap_reason": "string",
   "NoSpecializedExternalKnowledge": true|false,
   "NoSpecializedExternalKnowledge_reason": "string",
-  "IsConciseQuestion": true|false,
-  "IsConciseQuestion_reason": "string",
-  "IsConciseAnswer": true|false,
-  "IsConciseAnswer_reason": "string",
+  "IsShortQuestion": true|false,
+  "IsShortQuestion_reason": "string",
+  "IsPreciseAnswer": true|false,
+  "IsPreciseAnswer_reason": "string",
   "Recommendations": {{
     "Critical": "string",
     "NiceToHave": "string"

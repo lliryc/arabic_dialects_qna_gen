@@ -227,11 +227,12 @@ class QuestionBuilder:
       question = res["Question"]
       answer = res["Answer"]
       iteration_limit = 2
+      extended_iteration_limit = 3
       
       final_question = None
       final_answer = None
       
-      for _ in range(iteration_limit):
+      for i in range(iteration_limit + extended_iteration_limit):
         judgement = self.judge.run_challenging_eval_prompt(question, question)
         if judgement is None:
           print("No judgement generated")
@@ -259,6 +260,11 @@ class QuestionBuilder:
         if critical_recommendation == "None" and nice_to_have_recommendation == "None":
           print("No improvement needed")
           break
+        
+        if final_question is not None and i >= iteration_limit:
+          print("No improvement needed")
+          break
+        
         print("Improving question...")
 
         try:
