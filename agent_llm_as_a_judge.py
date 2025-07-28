@@ -144,7 +144,7 @@ Also, label these quality and formatting dimensions (True/False):
 - IsAnswerable: The question can be answered from the text with the allowed outside knowledge.
 - IsRelevant: The question is clearly related to the passage's content.
 - IsInThirdPerson: The question is phrased strictly in the third person.
-- IsNotVerbatimAnswer: The answer is a different grammatical form/forms of a word/words from a passage. The answer is uniquely inferable from passage content but never verbatim.
+- IsNotVerbatimAnswer: It is impossible to use span from the passage to answer the question. The answer is uniquely inferable from passage content but never verbatim.
 - QuestionFreeFromLinguisticOrGrammarTerms: Grammar or linguistic terms are not used in the question.
 - IsConciseQuestion: The question is 16 words or fewer.
 - IsConciseAnswer: The answer is short and to the point.
@@ -185,6 +185,19 @@ Provide evaluation strictly in JSON:
     "NiceToHave": "string"               // string; suggestion to increase complexity
   }}
 }}
+
+Return only the JSON object, nothing else. Otherwise you will be penalized $1000 per word.
+
+Passage:
+--------------------------------
+{passage}
+--------------------------------
+
+Question:
+{question}
+
+Answer:
+{answer}
 """)
 
 
@@ -221,8 +234,8 @@ class LLMAsAJudge:
       try:
           res = chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
                               "question_language": self.question_language, "question": question, 
-                              "answer": answer, "answer_language": self.answer_language, 
-                              "country": self.country})
+                              "answer_language": self.answer_language, "answer": answer
+                              })
       except Exception as e:
           print(e)
           return None

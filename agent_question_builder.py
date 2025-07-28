@@ -48,10 +48,10 @@ After addressing all critical errors, implement the Recommendations.NiceToHave t
 The final question-answer pair must be non-opinionated, have a short, unambiguous answer derivable from the passage (partly supported by high school level knowledge from {country} that not present in the passage), and adhere to the {question_language} and {answer_language} requirements.
 
 Return your response in the following JSON format. If the question is impossible to fix, return 'N/A'.
-{
-  "New Question": "The improved question in {question_language} or N/A",
-  "New Answer": "The improved answer in {answer_language} or N/A"
-}
+{{
+  "Question": "The improved question in {question_language} or N/A",
+  "Answer": "The improved answer in {answer_language} or N/A"
+}}
 
 INPUT: 
 
@@ -133,10 +133,10 @@ After addressing all critical errors, implement the Recommendations.NiceToHave t
 The final reading comprehension question-answer pair must be non-opinionated, have a short, unambiguous answer derivable or inferred from the passage.
 
 Return your response in the following JSON format. If the question is impossible to fix, return 'N/A'.
-{
-  "New Question": "The improved question in {question_language} or N/A",
-  "New Answer": "The improved answer in {answer_language} or N/A"
-}
+{{
+  "Question": "The improved question in {question_language} or N/A",
+  "Answer": "The improved answer in {answer_language} or N/A"
+}}
 
 INPUT: 
 
@@ -180,7 +180,7 @@ class QuestionBuilder:
         
         # Initialize judge with error handling
         try:
-            self.judge = LLMAsAJudge(passage, passage_language, question_language)
+            self.judge = LLMAsAJudge(passage, passage_language, question_language, answer_language, country)
         except Exception as e:
             print(f"Warning: Failed to initialize LLMAsAJudge: {e}")
             self.judge = None
@@ -212,7 +212,9 @@ class QuestionBuilder:
       initial_chain = challenging_initial_prompt | self.llm | JsonOutputParser()
       improvement_chain = challenging_improvement_prompt | self.llm | JsonOutputParser()
       try:
-          res = initial_chain.invoke({"passage": self.passage, "passage_language": self.passage_language, "question_language": self.question_language, "answer_language": self.answer_language}, "country": self.country)
+          res = initial_chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
+                                      "question_language": self.question_language, "answer_language": self.answer_language, 
+                                      "country": self.country})
       except Exception as e:
           print(e)
           return None
@@ -224,13 +226,13 @@ class QuestionBuilder:
       print("Question-Generation Agent: ", res)
       question = res["Question"]
       answer = res["Answer"]
-      iteration_limit = 3
+      iteration_limit = 2
       
       final_question = None
       final_answer = None
       
       for _ in range(iteration_limit):
-        judgement = self.judge.run_challenging_eval_prompt(question)
+        judgement = self.judge.run_challenging_eval_prompt(question, question)
         if judgement is None:
           print("No judgement generated")
           return None
@@ -315,7 +317,7 @@ class QuestionBuilder:
       final_answer = None
       
       for _ in range(iteration_limit):
-        judgement = self.judge.run_moderate_eval_prompt(question)
+        judgement = self.judge.run_moderate_eval_prompt(question, answer)
         if judgement is None:
           print("No judgement generated")
           return None
@@ -367,13 +369,11 @@ class QuestionBuilder:
     
     def build_qna(self):
 
-        #challenging_question, challenging_answer = self.build_qna_in_multiple_steps()
+        challenging_question, challenging_answer = self.build_challenging_qna_in_multiple_steps()
         results = []
-        results.append({"Question": "N/A", "Answer": "N/A"})
-        #results.append({"Question": challenging_question, "Answer": challenging_answer})
-               
-        #self.previous_questions.append(challenging_question)
-        
+        #results.append({"Question": "N/A", "Answer": "N/A"})
+        results.append({"Question": challenging_question, "Answer": challenging_answer})     
+        self.previous_questions.append(challenging_question)
         
         moderate_question, moderate_answer = self.build_moderate_qna_in_multiple_steps()
         results.append({"Question": moderate_question, "Answer": moderate_answer})

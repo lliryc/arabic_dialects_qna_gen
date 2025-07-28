@@ -66,22 +66,22 @@ if __name__ == "__main__":
       'google_api_credentials2.json', scopes=SCOPES)
 
     # Build the Sheets API service
-    service = build('sheets', 'v4', credentials=creds)
+
 
     for i in tqdm(range(100), desc="Questions Generation"):
+      
+        service = build('sheets', 'v4', credentials=creds)
 
-        passage = get_cell_value(service, f"A{i+2}", TEMPLATE_ID)
+        original_passage = get_cell_value(service, f"A{i+2}", TEMPLATE_ID)
         
         # Skip the first line of the passage
-        if passage and '\n\n' in passage:
-            passage = '\n\n'.join(passage.split('\n\n')[1:])
+        if original_passage and '\n\n' in original_passage:
+            passage = '\n\n'.join(original_passage.split('\n\n')[1:])
         
         # question_builder = QuestionBuilder(passage, "Egyptian Arabic", "Egyptian Arabic", "Modern Standard Arabic")
-        question_builder = QuestionBuilder(passage, "Emirati Arabic (Khaleej) ", "Emirati Arabic (Khaleej) ", "Modern Standard Arabic")
+        question_builder = QuestionBuilder(passage, "Emirati Arabic (Khaleej) ", "Emirati Arabic (Khaleej) ", "Modern Standard Arabic", "United Arab Emirates")
         results = question_builder.build_qna()
         print(results)
-        
-        set_cell_value(f"A{i+2}", passage)
         
         easy_question = results[2]["Question"]
         
@@ -109,7 +109,7 @@ if __name__ == "__main__":
             set_cell_value(f"Q{i+2}", "N/A")
             
 
-        time.sleep(random.randint(5, 10))
+        time.sleep(random.randint(2, 5))
 
 
 
