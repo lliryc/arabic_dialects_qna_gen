@@ -32,6 +32,8 @@ Also, label these quality and formatting dimensions (True/False):
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
 - IsShortQuestion: The question is 16 words or fewer.
 - IsPreciseAnswer: The answer does not contain unnecessary details or irrelevant information.
+- IsShortAnswer: The answer is short (no more than 4 words).
+
 
 Include recommendations:
 Critical: If any of the checks for boolean dimensions are false, describe how to fix it. 
@@ -64,6 +66,8 @@ Output your evaluation strictly as the following JSON schema. Return only the JS
   "IsShortQuestion_reason": "string",
   "IsPreciseAnswer": true|false,
   "IsPreciseAnswer_reason": "string",
+  "IsShortAnswer": true|false,
+  "IsShortAnswer_reason": "string",
   "Recommendations": {{
     "Critical": "string",
     "NiceToHave": "string"

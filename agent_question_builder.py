@@ -16,7 +16,7 @@ question_types = ["easy", "moderate", "challenging"]
 
 
 challenging_initial_prompt = ChatPromptTemplate.from_template("""
-You need to generate a reading comprehension non-opinionated question in {question_language} along with a precise, unambiguous  answer in {answer_language} based on the passage written in {passage_language}. 
+You need to generate a reading comprehension non-opinionated question in {question_language} along with a short, precise, unambiguous  answer in {answer_language} based on the passage written in {passage_language}. 
 Formulate the question strictly in the third person.
 This question should be based on understanding and interpreting the passage. 
 It must be possible to infer the answers to this question from the passage.
@@ -45,7 +45,8 @@ Revise the original_question and original_answer based on the provided judge fee
 Your primary mandate is to resolve all issues in Recommendations.Critical. 
 Systematically correct every dimension flagged as false in the feedback, using the associated _reason fields to guide your edits. 
 After addressing all critical errors, implement the Recommendations.NiceToHave to increase the question's reasoning complexity.
-The final question-answer pair must be non-opinionated, have a short, unambiguous answer derivable from the passage (partly supported by high school level knowledge from {country} that not present in the passage), and adhere to the {question_language} and {answer_language} requirements.
+Ensure all boolean dimensions from the feedback are True for new version of question and answer. If not, make changes to the question and answer to satisfy all boolean dimensions.
+The final question must be written in {question_language} and answer written in {answer_language}.
 
 Return your response in the following JSON format. If the question is impossible to fix, return 'N/A'.
 {{
