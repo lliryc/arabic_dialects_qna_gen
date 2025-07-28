@@ -30,7 +30,8 @@ Also, label these quality and formatting dimensions (True/False):
 - IsInThirdPerson: The question is phrased strictly in the third person.
 - NoHighLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
-- IsShortQuestion: The question is 16 words or fewer.
+- IsShortAndPreciseQuestion: The question is 5 words or fewer.
+- IsShortAndPreciseAnswer: The answer is 5 words or fewer without unnecessary details or irrelevant information.
 
 
 Include recommendations:
@@ -62,6 +63,8 @@ Output your evaluation strictly as the following JSON schema. Return only the JS
   "NoSpecializedExternalKnowledge_reason": "string",
   "IsShortQuestion": true|false,
   "IsShortQuestion_reason": "string",
+  "IsShortAndPreciseAnswer": true|false,
+  "IsShortAndPreciseAnswer_reason": "string",
   "Recommendations": {{
     "Critical": "string",
     "NiceToHave": "string"
@@ -117,7 +120,7 @@ Provide evaluation strictly in JSON:
   "Biased": false|true,                 // boolean
   "Biased_reason": "string",          // string, reason for the biased
   "NonAnswerable": false|true,          // boolean
-  "Irrelevant": false,             // boolean
+  "Irrelevant": false|true,             // boolean
   "Recommendations": {{
     "Critical": "string",                // string; empty if no critical issues
     "NiceToHave": "string"               // string; suggestion to increase complexity
