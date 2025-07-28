@@ -48,8 +48,9 @@ passage_eval_prompt = ChatPromptTemplate.from_messages(
 
 model_name = "gemini-2.5-pro"
 
-#TEMPLATE_ID = "10LUCJ6xyZjUgn6RM80em1B5duRw2dK5Eizd3EQXI7xY"
-TEMPLATE_ID = "1FUHdBALXPddxs6aT_S3lF9wTF0kVXYnYPq72zQo7Ytw"
+#TEMPLATE_ID = "10LUCJ6xyZjUgn6RM80em1B5duRw2dK5Eizd3EQXI7xY" # Egy work files
+#TEMPLATE_ID = "1FUHdBALXPddxs6aT_S3lF9wTF0kVXYnYPq72zQo7Ytw" # Emirati corrected passages
+TEMPLATE_ID = "1Z86UWLj3C3JO9iduDVJVMGYNgmbBfyLxxU8G8wlgk4U" # Egy corrected passages
 
 if __name__ == "__main__":
 
@@ -170,7 +171,8 @@ if __name__ == "__main__":
             passage = '\n\n'.join(passage.split('\n\n')[1:])
         
 
-        result = run_json_prompt(passage_eval_prompt, passage, "Emirati Arabic")
+        #result = run_json_prompt(passage_eval_prompt, passage, "Emirati Arabic")
+        result = run_json_prompt(passage_eval_prompt, passage, "Egyptian Arabic")
         
         if result is not None:
             set_eval_result(service, i+2, result, TEMPLATE_ID)
