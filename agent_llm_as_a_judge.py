@@ -150,8 +150,9 @@ Also, label these quality and formatting dimensions (True/False):
 - IsInThirdPerson: The question is phrased strictly in the third person.
 - IsNotVerbatimAnswer: It is impossible to use span from the passage to answer the question. The answer is uniquely inferable from passage content but never verbatim.
 - QuestionFreeFromLinguisticOrGrammarTerms: Grammar or linguistic terms are not used in the question.
-- IsConciseQuestion: The question is 16 words or fewer.
-- IsConciseAnswer: The answer is short and to the point.
+- IsShortQuestion: The question is 16 words or fewer.
+- IsPreciseAnswer: The answer does not contain unnecessary details or irrelevant information.
+- IsShortAnswer: The answer is less than 4 words.
 
 
 Critical: If any of the checks for boolean dimensions are false, describe how to fix it. 
@@ -180,10 +181,13 @@ Provide evaluation strictly in JSON:
   "IsNotVerbatimAnswer_reason": "string",
   "QuestionFreeFromLinguisticOrGrammarTerms": true|false,
   "QuestionFreeFromLinguisticOrGrammarTerms_reason": "string",
-  "IsConciseQuestion": true|false,
-  "IsConciseQuestion_reason": "string",
-  "IsConciseAnswer": true|false,
-  "IsConciseAnswer_reason": "string",
+  "IsShortQuestion": true|false,
+  "IsShortQuestion_reason": "string",
+  "IsPreciseAnswer": true|false,
+  "IsPreciseAnswer_reason": "string",
+  "IsShortAnswer": true|false,
+  "IsShortAnswer_reason": "string",
+
   "Recommendations": {{
     "Critical": "string",                // string; empty if no critical issues
     "NiceToHave": "string"               // string; suggestion to increase complexity

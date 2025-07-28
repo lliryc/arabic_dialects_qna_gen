@@ -21,12 +21,14 @@ Formulate the question strictly in the third person.
 This question should be based on understanding and interpreting the passage. 
 It must be possible to infer the answers to this question from the passage.
 In order to answer the question, pieces of information in the passage might need to be connected or the order of events need to be tracked.
-The correct answer must be derived through inference or reasoning, but not explicitly found in a span of the text. It can be derived partly through external knowledge of high school level in {country} that is not present in the passage.
+
+IMPORTANT:The correct answer must be derived through inference or reasoning, but not explicitly found in a span of the text. It can be derived partly through external knowledge of high school level in {country} that is not present in the passage.
+
 Try to minimise the use of the exact same words or phrases directly from the passage when generating the question. The question should be a rephrasing of parts of the passage content that maintains the original meaning.
 You must not use a question similar to the previous questions. The answer to the question should not be the same as the answer to previous questions.
 Your response must contain the question and answer only or 'N/A' if the question can not be created.
 Keep the question short and concise (no more than 16 words).
-The answer must be short. 
+The answer must be short (no more than 4 words). 
 
 Return your response in the following JSON format:
 {{
@@ -47,6 +49,29 @@ Systematically correct every dimension flagged as false in the feedback, using t
 After addressing all critical errors, implement the Recommendations.NiceToHave to increase the question's reasoning complexity.
 Ensure all boolean dimensions from the feedback are True for new version of question and answer. If not, make changes to the question and answer to satisfy all boolean dimensions.
 The final question must be written in {question_language} and answer written in {answer_language}.
+
+Here is a judgement criteria description.
+
+Complexity based on how many distinct reasoning/inference steps are needed to answer correctly:
+1: Minimal reasoning (direct retrieval or single simple connection)
+2: Simple inference (one clear reasoning step)
+3: Moderate inference (two reasoning steps)
+4: Complex inference (three reasoning steps)
+5: Highly challenging inference (four or more reasoning steps)
+
+Boolean dimensions (True/False):
+- IsNonOpinionated: The question is objective and not based on personal opinion.
+- UnambiguousAnswer: The answer is clear and does not allow multiple interpretations.
+- IsUnbiased: The question is free from prejudice.
+- IsAnswerable: The question can be answered from the text with the allowed outside knowledge.
+- IsRelevant: The question is clearly related to the passage's content.
+- AnswerNotInSpan: The answer is correctly derived through inference, not just copied from a single text span.
+- IsInThirdPerson: The question is phrased strictly in the third person.
+- NoHighLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
+- NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
+- IsShortQuestion: The question is 16 words or fewer.
+- IsPreciseAnswer: The answer does not contain unnecessary details or irrelevant information.
+- IsShortAnswer: The answer is short (no more than 4 words).
 
 Return your response in the following JSON format. If the question is impossible to fix, return 'N/A'.
 {{
