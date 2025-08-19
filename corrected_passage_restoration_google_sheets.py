@@ -92,7 +92,7 @@ def get_file_ids_from_folder(folder_link):
   return [(file['id'], file['name']) for file in files.get('files', [])]
 
 def get_document_tab_names(doc_id):
-  """Get sheet names (tabs) from a Google Sheet"""
+  """Get sheet names (tabs) and IDs from a Google Sheet"""
   creds = service_account.Credentials.from_service_account_file(
     'google_api_credentials2.json', scopes=SCOPES)
   
@@ -100,10 +100,10 @@ def get_document_tab_names(doc_id):
   sheet = service.spreadsheets()
   
   try:
-    # Get the spreadsheet metadata which includes sheet names
+    # Get the spreadsheet metadata which includes sheet names and IDs
     result = sheet.get(spreadsheetId=doc_id).execute()
-    sheet_names = [sheet['properties']['title'] for sheet in result.get('sheets', [])]
-    return sheet_names
+    sheet_info = [(sheet['properties']['title'], sheet['properties']['sheetId']) for sheet in result.get('sheets', [])]
+    return sheet_info
   except HttpError as error:
     print(f"HTTP Error {error.resp.status}: {error}")
     return []

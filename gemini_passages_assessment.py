@@ -72,6 +72,27 @@ if __name__ == "__main__":
     "https://www.googleapis.com/auth/drive"
 ]
 
+
+def censorship_check(passage, dialect):
+  
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-2.5-pro",
+        temperature=0.7,
+        max_tokens=None,
+        timeout=None,
+        max_retries=2,
+        api_key=os.getenv("GOOGLE_API_KEY"),
+    )
+    chain = passage_eval_prompt | llm
+    try:  
+        res = chain.invoke({"passage": passage, "dialect": dialect})
+    except Exception as e:
+        print(e)
+        time.sleep(random.randint(2, 5))
+        return None
+   
+    return res
+
 def run_json_prompt(prompt, passage, dialect):
     chain = prompt | llm | JsonOutputParser()
     try:  

@@ -83,6 +83,9 @@ Question:
 
 Answer:
 {answer}
+
+Quotes:
+{quotes}
 """)
 
 common_judgement_prompt = ChatPromptTemplate.from_template("""You are evaluating reading comprehension questions in {question_language} based on the text below written in {passage_language}. 
@@ -203,6 +206,9 @@ Question:
 
 Answer:
 {answer}
+
+Quotes:
+{quotes}
 """)
 
 
@@ -222,24 +228,24 @@ class LLMAsAJudge:
     self.answer_language = answer_language
     self.country = country
     
-  def run_challenging_eval_prompt(self, question, answer):
+  def run_challenging_eval_prompt(self, question, answer, quotes):
     chain = challenging_judgement_prompt | self.llm | JsonOutputParser()
     try:
         res = chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
                             "question_language": self.question_language, "question": question, 
-                            "answer": answer, "answer_language": self.answer_language, 
+                            "answer": answer, "quotes": quotes, "answer_language": self.answer_language, 
                             "country": self.country})
     except Exception as e:
         print(e)
         return None
     return res
   
-  def run_moderate_eval_prompt(self, question, answer):
+  def run_moderate_eval_prompt(self, question, answer, quotes):
       chain = moderate_judgement_prompt | self.llm | JsonOutputParser()
       try:
           res = chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
                               "question_language": self.question_language, "question": question, 
-                              "answer_language": self.answer_language, "answer": answer
+                              "answer_language": self.answer_language, "answer": answer, "quotes": quotes
                               })
       except Exception as e:
           print(e)
