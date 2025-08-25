@@ -80,8 +80,8 @@ Boolean dimensions (True/False):
 - IsInThirdPerson: The question is phrased strictly in the third person.
 - NoHighLexicalOverlap: The question rephrases concepts and avoids copying exact phrases from the passage.
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
-- IsShortQuestion: The question is 16 words or fewer.
-- IsShortAndPreciseAnswer: The answer is short (no more than 5 words) and does not contain unnecessary details or irrelevant information.
+- IsShortQuestion: The question is 15 words or fewer.
+- IsShortAndPreciseAnswer: The answer is short (no more than 4 words) and does not contain unnecessary details or irrelevant information.
 
 
 Return your response in the following JSON format. Keep answer precise, unambiguous and short or you will be penalized $1000 per word. If the question is impossible to fix, return 'N/A'.
