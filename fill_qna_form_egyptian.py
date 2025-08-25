@@ -25,9 +25,9 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-FOLDER_LINK = "https://drive.google.com/drive/folders/1YYkmuCkPQq0IL4zXpqBC8ValbQaB8hvy"
+FOLDER_LINK = "https://drive.google.com/drive/folders/1rt_ICheHx5EKufUQbjgTfVdm4WA7rFw7"
 
-TEMPLATE_ID = "1H5rhYlgpZTUvz8TH5anrWXfOZ3n5BtWR0CJrjxqp8uM" # Form
+TEMPLATE_ID = "1iySBPqCZMg4-6bjlX3xXTd0o0vKJRfVrfuMJ7IsS3iQ" # Form
 
 def set_cell_value_with_color(sheet_id, cell, value, color_spans = []):
     creds = None
@@ -363,71 +363,77 @@ if __name__ == "__main__":
   
     file_ids = get_file_ids_from_folder(FOLDER_LINK)
     
-    file_ids = list(sorted(file_ids, key=lambda x: x[1]))
+    file_ids = list(sorted(file_ids, key=lambda x: int(x[1].split("_")[-1])))
     
-    doc_id = file_ids[1][0]
+    doc_id = file_ids[0][0]
     
-    tab_info = get_document_tab_names(doc_id)
+    for j in range(10):
     
-    tab_name = tab_info[0][0]
-    tab_id = tab_info[0][1]
-    
-    passage = get_corrected_transcription(doc_id, tab_name)
-    
-    form_tab_info = get_document_tab_names(TEMPLATE_ID)
-    
-    form_tab_name = form_tab_info[0][0]
-    form_tab_id = form_tab_info[0][1]
-    
+      tab_info = get_document_tab_names(doc_id)
+      
+      tab_name = tab_info[j][0]
+      tab_id = tab_info[j][1]
+      
+      passage = get_corrected_transcription(doc_id, tab_name)
+      
+      form_tab_info = get_document_tab_names(TEMPLATE_ID)
+      
+      form_tab_name = form_tab_info[j][0]
+      form_tab_id = form_tab_info[j][1]
+      
 
-    #result = set_merged_cell_value(form_tab_id, "B2:F3", passage, color_spans = [{"start": 0, "end": 100, "color": {"red": 0.353, "green": 0.098, "blue": 0.604}}])
-    #print(f"Passage test result: {result}")
-    
-    print(passage)
-    
-    total_results = []
-    
-    for i in tqdm(range(5), desc="Building questions"):
-        previous_questions = copy.deepcopy(total_results)
-        question_builder = QuestionBuilder(passage, "Syrian Arabic", "Syrian Arabic", "Modern Standard Arabic", "Syria", previous_questions=previous_questions)
-        results = question_builder.build_qna()
-        filtered_results = filter_results(results, passage)
-        total_results.extend(filtered_results)
-        print("-"*100)
-    
-    total_results = filter_results(total_results, passage)
-    
-    # Alternative: Direct lambda usage without separate function
-    total_results = sorted(total_results, key=lambda x: custom_sort_key(x))
-    
-    if len(total_results) < 9:
-        print(f"Not enough questions found: {len(total_results)}") 
-        exit()
-        
-    total_results = total_results[:9]
-    
-    quotes = [result["Quotes"] for result in total_results]
-    
-    color_spans = build_spans(quotes, passage)
-    
-    for i, result in enumerate(total_results):
-        set_cell_value(form_tab_name, f"B{2*i+5}", result["Question"])
-        set_cell_value(form_tab_name, f"B{2*i+6}", result["Answer"])
-        
-    set_merged_cell_value(form_tab_id, "B2:F3", passage, color_spans=color_spans)
-        
-    #print("-"*100)
-    #print("Total results:")
-    #print(total_results)
-    
-    #censorship_result = censorship_check(text, "Syrian Arabic)")
-    
-    #censorship_list = get_censorship_list(censorship_result)
-    
-    #print(censorship_list)
-    
-    #for i, item in enumerate(censorship_list):
-    #    set_cell_value(form_tab_name, f"C{i+7}", item)
+      #result = set_merged_cell_value(form_tab_id, "B2:F3", passage, color_spans = [{"start": 0, "end": 100, "color": {"red": 0.353, "green": 0.098, "blue": 0.604}}])
+      #print(f"Passage test result: {result}")
+      
+      print(passage)
+      
+      total_results = []
+      
+      for i in tqdm(range(5), desc="Building questions"):
+          previous_questions = copy.deepcopy(total_results)
+          question_builder = QuestionBuilder(passage, "Egyptian Arabic", "Egyptian Arabic", "Modern Standard Arabic", "Egypt", previous_questions=previous_questions)
+          results = question_builder.build_qna()
+          results_str = json.dumps(results, indent=4)
+          with open(f"question_logs.txt", "a") as log_out:
+              log_out.write(results_str)
+              log_out.write("\n")
+              log_out.write("\n")
+          filtered_results = filter_results(results, passage)
+          total_results.extend(filtered_results)
+          print("-"*100)
+      
+      total_results = filter_results(total_results, passage)
+      
+      total_results = sorted(total_results, key=lambda x: custom_sort_key(x))
+      
+      if len(total_results) < 9:
+          print(f"Not enough questions found: {len(total_results)}") 
+          exit()
+          
+      total_results = total_results[:9]
+      
+      quotes = [result["Quotes"] for result in total_results]
+      
+      color_spans = build_spans(quotes, passage)
+      
+      for i, result in enumerate(total_results):
+          set_cell_value(form_tab_name, f"B{2*i+5}", result["Question"])
+          set_cell_value(form_tab_name, f"B{2*i+6}", result["Answer"])
+          
+      set_merged_cell_value(form_tab_id, "B2:F3", passage, color_spans=color_spans)
+          
+      #print("-"*100)
+      #print("Total results:")
+      #print(total_results)
+      
+      #censorship_result = censorship_check(text, "Syrian Arabic)")
+      
+      #censorship_list = get_censorship_list(censorship_result)
+      
+      #print(censorship_list)
+      
+      #for i, item in enumerate(censorship_list):
+      #    set_cell_value(form_tab_name, f"C{i+7}", item)
     
     
     
