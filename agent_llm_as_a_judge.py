@@ -33,6 +33,7 @@ Also, label these quality and formatting dimensions (True/False):
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
 - IsShortAndPreciseQuestion: The question is 16 words or fewer.
 - IsShortAndPreciseAnswer: The answer is 5 words or fewer without unnecessary details or irrelevant information.
+- IsIn{passage_language}: The question, answer and quotes must be in {passage_language}.
 
 
 Include recommendations:
@@ -66,6 +67,8 @@ Output your evaluation strictly as the following JSON schema. Return only the JS
   "IsShortQuestion_reason": "string",
   "IsShortAndPreciseAnswer": true|false,
   "IsShortAndPreciseAnswer_reason": "string",
+  "IsIn{passage_language}": true|false,
+  "IsIn{passage_language}_reason": "string",
   "Recommendations": {{
     "Critical": "string",
     "NiceToHave": "string"
@@ -111,6 +114,7 @@ Also, label these quality and formatting dimensions (True/False):
 - IsShortQuestion: The question is 16 words or fewer.
 - IsPreciseAnswer: The answer does not contain unnecessary details or irrelevant information.
 - IsShortAnswer: The answer is less than 4 words.
+- IsIn{passage_language}: The question, answer and quotes must be in {passage_language}.
 
 
 Critical: If any of the checks for boolean dimensions are false, describe how to fix it. 
@@ -145,7 +149,9 @@ Provide evaluation strictly in JSON:
   "IsPreciseAnswer_reason": "string",
   "IsShortAnswer": true|false,
   "IsShortAnswer_reason": "string",
-
+  "IsIn{passage_language}": true|false,
+  "IsIn{passage_language}_reason": "string",
+  
   "Recommendations": {{
     "Critical": "string",                // string; empty if no critical issues
     "NiceToHave": "string"               // string; suggestion to increase complexity

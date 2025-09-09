@@ -32,6 +32,8 @@ Keep the question short and concise (no more than 16 words).
 The answer must be short, precise and unambiguous. 
 The quotes must be exact and exact character indices of the quote in the passage must be provided.
 
+IMPORTANT: The question, answer and quotes must be in {passage_language}. Otherwise you will be penalized $1000 per word.
+
 Return your response in the following JSON format:
 {{
   "Question": "your question in {passage_language} or N/A",
@@ -81,6 +83,7 @@ Boolean dimensions (True/False):
 - NoSpecializedExternalKnowledge: The question might require high school level knowledge from {country} to answer. No specialized university-level knowledge, advanced academic concepts, or expert-level details.
 - IsShortQuestion: The question is 15 words or fewer.
 - IsShortAndPreciseAnswer: The answer is short (no more than 4 words) and does not contain unnecessary details or irrelevant information.
+- IsIn{passage_language}: The question, answer and quotes must be in {passage_language}.
 
 
 Return your response in the following JSON format. Keep answer precise, unambiguous and short or you will be penalized $1000 per word. If the question is impossible to fix, return 'N/A'.
@@ -128,6 +131,7 @@ Your response must contain the question and answer only or 'N/A' if the question
 Keep the question short and concise (no more than 16 words).
 The answer must be short.
 The quotes must be exact and exact character indices of the quote in the passage must be provided.
+IMPORTANT: The question, answer and quotes must be in {passage_language}. Otherwise you will be penalized $1000 per word.
 
 Passage:
 --------------------------------
@@ -166,6 +170,7 @@ Your response must contain the question and answer only or 'N/A' if the question
 Keep the question short and concise (no more than 16 words).
 The answer must be short. 
 The quotes must be exact and exact character indices of the quote in the passage must be provided.
+IMPORTANT: The question, answer and quotes must be in {passage_language}. Otherwise you will be penalized $1000 per word.
 
 Passage:
 --------------------------------
