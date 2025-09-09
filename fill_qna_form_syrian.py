@@ -93,6 +93,10 @@ def set_cell_value_with_color(sheet_id, cell, value, color_spans = []):
         
         # Now process all spans (original + gap fills)
         for span in filled_spans:
+            # Ensure start index is valid (>= 0)
+            if span["start"] < 0:
+                print(f"Warning: Skipping invalid span with negative start index: {span['start']}")
+                continue
             text_format_runs.append({
                 "startIndex": span["start"],
                 "format": {
@@ -262,6 +266,10 @@ def set_merged_cell_value(sheet_id, cell_range, value, color_spans=None):
             
             # Create text format runs
             for span in filled_spans:
+                # Ensure start index is valid (>= 0)
+                if span["start"] < 0:
+                    print(f"Warning: Skipping invalid span with negative start index: {span['start']}")
+                    continue
                 text_format_runs.append({
                     "startIndex": span["start"],
                     "format": {
@@ -330,7 +338,7 @@ def filter_results(results, passage):
             continue
         if result["Question"] == "N/A" or result["Answer"] == "N/A" or result["Quotes"][0] == "N/A":
             continue
-        if result["Quotes"][0]["text"] not in passage:
+        if not any([quote["text"] in passage for quote in result["Quotes"]]):
             continue
         filtered_results.append(result)
         
@@ -353,7 +361,29 @@ def build_spans(quotes, passage: str):
     for i, quote_list in enumerate(quotes):
         for quote in quote_list:
             quote_text = quote["text"]
+            
+            # Debug: Check if quote is found with 'in' operator
+            found_with_in = quote_text in passage
             start = passage.find(quote_text)
+            
+            if start == -1:
+                # Quote not found in passage, skip this span
+                print(f"Warning: Quote text not found in passage: '{quote_text[:50]}...'")
+                print(f"  Found with 'in' operator: {found_with_in}")
+                print(f"  Quote length: {len(quote_text)}")
+                print(f"  Passage length: {len(passage)}")
+                if found_with_in:
+                    print(f"  WARNING: Quote found with 'in' but not with 'find()' - this shouldn't happen!")
+                    # Try to find the quote with different approaches
+                    print(f"  Trying to find with stripped text...")
+                    stripped_quote = quote_text.strip()
+                    if stripped_quote != quote_text:
+                        start = passage.find(stripped_quote)
+                        if start != -1:
+                            print(f"  Found with stripped text at position {start}")
+                        else:
+                            print(f"  Still not found with stripped text")
+                continue
             end = start + len(quote_text)
             output_color_spans.append({"start": start, "end": end, "color": color_pallete[i % len(color_pallete)]})
     output_color_spans = list(sorted(output_color_spans, key=lambda x: x["start"]))
@@ -389,7 +419,7 @@ if __name__ == "__main__":
     
     for i in tqdm(range(5), desc="Building questions"):
         previous_questions = copy.deepcopy(total_results)
-        question_builder = QuestionBuilder(passage, "Egyptian Arabic", "Egyptian Arabic", "Modern Standard Arabic", "Egypt", previous_questions=previous_questions)
+        question_builder = QuestionBuilder(passage, "Syrian Arabic", "Syrian Arabic", "Syrian Arabic", "Syria", previous_questions=previous_questions)
         results = question_builder.build_qna()
         filtered_results = filter_results(results, passage)
         total_results.extend(filtered_results)

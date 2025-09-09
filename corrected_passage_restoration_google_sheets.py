@@ -314,6 +314,12 @@ def write_to_google_sheet(doc_id, tab_name, text, cell_range):
   ).execute()
 
 def get_corrected_transcription(doc_id, tab_name):
+  global passage_paragraphs, speaker_mark, paragraph_mark
+  
+  # Reset global variables
+  passage_paragraphs = []
+  speaker_mark = None
+  paragraph_mark = None
   
   creds = service_account.Credentials.from_service_account_file(
     'google_api_credentials2.json', scopes=SCOPES)

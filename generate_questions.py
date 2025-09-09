@@ -78,8 +78,7 @@ if __name__ == "__main__":
         if original_passage and '\n\n' in original_passage:
             passage = '\n\n'.join(original_passage.split('\n\n')[1:])
         
-        # question_builder = QuestionBuilder(passage, "Egyptian Arabic", "Egyptian Arabic", "Modern Standard Arabic")
-        question_builder = QuestionBuilder(passage, "Emirati Arabic (Khaleej) ", "Emirati Arabic (Khaleej) ", "Modern Standard Arabic", "United Arab Emirates")
+        question_builder = QuestionBuilder(passage, "Emirati Arabic (Khaleej) ", "Emirati Arabic (Khaleej) ", "Emirati Arabic (Khaleej)", "United Arab Emirates")
         results = question_builder.build_qna()
         print(results)
         

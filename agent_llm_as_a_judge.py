@@ -10,7 +10,8 @@ from langchain_core.output_parsers import JsonOutputParser
 
 
 challenging_judgement_prompt = ChatPromptTemplate.from_template("""
-You are evaluating a reading comprehension question in {question_language} and its answer in {answer_language} based on the passage below, which is written in {passage_language}.
+You are {passage_language} native speaker.
+You are evaluating a reading comprehension question and its answer based on the passage below, which is written in {passage_language}.
 The question should be answerable using reasoning based on the passage, possibly supported by high school level knowledge from {country}.
 
 Rate complexity based on how many distinct reasoning/inference steps are needed to answer correctly:
@@ -88,52 +89,9 @@ Quotes:
 {quotes}
 """)
 
-common_judgement_prompt = ChatPromptTemplate.from_template("""You are evaluating reading comprehension questions in {question_language} based on the text below written in {passage_language}. 
-The questions allow usage of knowledge from the text as well as high school level knowledge to answer. 
-
-Rate its complexity using a 5-point Likert scale:
-
-1 (Trivial): Answer obvious; no inference required; may directly repeat text.
-2 (Easy): Little inference; minimal paraphrasing; slight thinking needed.
-3 (Moderate): Requires clear inference, paraphrasing, and integration of ideas.
-4 (Hard): Demands multiple inference steps, significant paraphrasing, or deeper reasoning.
-5 (Very Hard): Highly complex inference; extensive paraphrasing; multiple challenging reasoning steps.
-
-Assess additional dimensions (True/False):
-
-- Opinionated: Subjective, requires personal opinion.
-- Biased: Contains bias/prejudice.
-- NonAnswerable: Cannot be answered from text with high school level knowledge support.
-- Irrelevant: Unrelated to text content.
-
-Include recommendations:
-
-Critical: If any of Opinionated/Biased/NonAnswerable/Irrelevant are true, briefly describe how to correct it.
-
-NiceToHave: Suggest briefly how to increase complexity.
-
-Provide evaluation strictly in JSON:
-
-{{
-  "Complexity": 1|2|3|4|5,                 // integer [1–5]
-  "Complexity_reason": "string",          // string, reason for the complexity
-  "Opinionated": false|true,            // boolean
-  "Opinionated_reason": "string",      // string, reason for the opinionated
-  "Ambiguous": false|true,            // boolean
-  "Biased": false|true,                 // boolean
-  "Biased_reason": "string",          // string, reason for the biased
-  "NonAnswerable": false|true,          // boolean
-  "Irrelevant": false|true,             // boolean
-  "Recommendations": {{
-    "Critical": "string",                // string; empty if no critical issues
-    "NiceToHave": "string"               // string; suggestion to increase complexity
-  }}
-}}
-
-""")
-
 moderate_judgement_prompt = ChatPromptTemplate.from_template("""
-You are evaluating a reading comprehension question in {question_language} and its answer in {answer_language} based on the passage below, which is written in {passage_language}.
+You are {passage_language} native speaker.
+You are evaluating a reading comprehension question and its answer based on the passage below, which is written in {passage_language}.
 Your task is to provide a structured analysis of the question and answer using a rating grade of answer complexity, set of critical criteria and nice-to-have recommendations.
 
 Rate getting answer complexity using a 3-point scale:
@@ -213,7 +171,7 @@ Quotes:
 
 
 class LLMAsAJudge:
-  def __init__(self, passage, passage_language, question_language, answer_language, country):
+  def __init__(self, passage, passage_language, country):
     self.llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-pro",
         temperature=0.7,
@@ -224,16 +182,13 @@ class LLMAsAJudge:
     )
     self.passage = passage
     self.passage_language = passage_language
-    self.question_language = question_language
-    self.answer_language = answer_language
     self.country = country
     
   def run_challenging_eval_prompt(self, question, answer, quotes):
     chain = challenging_judgement_prompt | self.llm | JsonOutputParser()
     try:
         res = chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
-                            "question_language": self.question_language, "question": question, 
-                            "answer": answer, "quotes": quotes, "answer_language": self.answer_language, 
+                            "question": question, "answer": answer, "quotes": quotes, 
                             "country": self.country})
     except Exception as e:
         print(e)
@@ -244,8 +199,7 @@ class LLMAsAJudge:
       chain = moderate_judgement_prompt | self.llm | JsonOutputParser()
       try:
           res = chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
-                              "question_language": self.question_language, "question": question, 
-                              "answer_language": self.answer_language, "answer": answer, "quotes": quotes
+                              "question": question, "answer": answer, "quotes": quotes
                               })
       except Exception as e:
           print(e)

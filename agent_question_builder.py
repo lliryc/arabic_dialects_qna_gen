@@ -16,8 +16,8 @@ question_types = ["easy", "moderate", "challenging"]
 
 
 challenging_initial_prompt = ChatPromptTemplate.from_template("""
-You are a Logic & Reasoning teacher.  
-You need to generate a reading comprehension non-opinionated question in {question_language} along with a short, precise, unambiguous  answer in {answer_language} and the list of exact quotes from the text that was used to form the answer based on the passage written in {passage_language}. 
+You are a Logic & Reasoning teacher and {passage_language} native speaker.  
+You need to generate a reading comprehension non-opinionated question along with a short, precise, unambiguous  answer, and the list of exact quotes from the text that was used to form the answer based on the passage written in {passage_language}. 
 Formulate the question strictly in the third person.
 This question should be based on understanding and interpreting the passage. 
 It must be possible to infer the answers to this question from the passage.
@@ -34,8 +34,8 @@ The quotes must be exact and exact character indices of the quote in the passage
 
 Return your response in the following JSON format:
 {{
-  "Question": "your question in {question_language} or N/A",
-  "Answer": "your answer in {answer_language} or N/A",
+  "Question": "your question in {passage_language} or N/A",
+  "Answer": "your answer in {passage_language} or N/A",
   "Quotes":[
         {{
           "text": "your quote in {passage_language} or N/A",
@@ -52,13 +52,12 @@ Passage:
 """)
 
 challenging_improvement_prompt = ChatPromptTemplate.from_template("""
-You are a Logic & Reasoning teacher.  
+You are a Logic & Reasoning teacher and {passage_language} native speaker.  
 Revise the original_question along with original_answer and original_quotes based on the provided judge feedback.
 Your primary mandate is to resolve all issues in Recommendations.Critical. 
 Systematically correct every dimension flagged as false in the feedback, using the associated _reason fields to guide your edits. 
 After addressing all critical errors, implement the Recommendations.NiceToHave to increase the question's reasoning complexity.
 Ensure all boolean dimensions from the feedback are True for new version of question and answer. If not, make changes to the question and answer to satisfy all boolean dimensions.
-The final question must be written in {question_language} and answer written in {answer_language}.
 The quotes must be exact and exact character indices of the quote in the passage must be provided.
 
 Here is a judgement criteria description.
@@ -86,8 +85,8 @@ Boolean dimensions (True/False):
 
 Return your response in the following JSON format. Keep answer precise, unambiguous and short or you will be penalized $1000 per word. If the question is impossible to fix, return 'N/A'.
 {{
-  "Question": "The improved question in {question_language} or N/A",
-  "Answer": "The improved precise, unambiguous and short answer in {answer_language} or N/A",
+  "Question": "The improved question in {passage_language} or N/A",
+  "Answer": "The improved precise, unambiguous and short answer in {passage_language} or N/A",
   "Quotes":[
         {{
           "text": "your quote in {passage_language} or N/A",
@@ -119,10 +118,11 @@ Judge Feedback:
 """)
 
 easy_initial_prompt = ChatPromptTemplate.from_template("""
-You need to generate a reading comprehension non-opinionated question in {question_language} along with a precise, unambiguous answer in {answer_language} and the list of exact quotes from the text that was used to form the answer based on the passage written in {passage_language}. 
+You are {passage_language} native speaker.  
+You need to generate a reading comprehension non-opinionated question along with a precise, unambiguous answer and the list of exact quotes from the text that was used to form the answer based on the passage written in {passage_language}. 
 Formulate the question strictly in the third person.
-This question should be based on understanding and interpreting the passage, and it must be possible to find the answer to this question in the text and not rely on inference, on external knowledge or on one's own opinion.
-The answer must be found in one text span of the passage.
+This question should be based on understanding and interpreting the passage, and it must be possible to find the answer to this question directly in the text and not rely on inference, on external knowledge or on one's own opinion.
+The answer must be copied verbatim as a short quote from the passage. Do not paraphrase or rephrase.
 You must not use a question similar to the previous questions. The answer to the question should not be the same as the answer to previous questions.
 Your response must contain the question and answer only or 'N/A' if the question can not be created.
 Keep the question short and concise (no more than 16 words).
@@ -130,12 +130,14 @@ The answer must be short.
 The quotes must be exact and exact character indices of the quote in the passage must be provided.
 
 Passage:
+--------------------------------
 {passage}
+--------------------------------
 
 Return your response in the following JSON format:
 {{
-  "Question": "your question in {question_language} or N/A",
-  "Answer": "your answer in {answer_language} or N/A",
+  "Question": "your question in {passage_language} or N/A",
+  "Answer": "your answer in {passage_language} or N/A",
   "Quotes":[
         {{
           "text": "your quote in {passage_language} or N/A",
@@ -146,11 +148,13 @@ Return your response in the following JSON format:
 }}
 
 Previous questions:
+
 {previous_questions}
 """)
 
 moderate_initial_prompt = ChatPromptTemplate.from_template("""
-You need to generate a reading comprehension non-opinionated question in {question_language} along with a precise, unambiguous  answer in {answer_language} and the list of exact quotes from the text that was used to form the answer based on the passage written in {passage_language}. 
+You are a Logic & Reasoning teacher and {passage_language} native speaker.  
+You need to generate a reading comprehension non-opinionated question along with a precise, unambiguous  answer and the list of exact quotes from the text that was used to form the answer based on the passage written in {passage_language}. 
 Formulate the question strictly in the third person.
 This question should be based on understanding and interpreting the passage. 
 It must be possible to infer the answer to this question from the passage quote.
@@ -170,8 +174,8 @@ Passage:
 
 Return your response in the following JSON format:
 {{
-  "Question": "your question in {question_language} or N/A",
-  "Answer": "your answer in {answer_language} or N/A",
+  "Question": "your question in {passage_language} or N/A",
+  "Answer": "your answer in {passage_language} or N/A",
   "Quotes":[
         {{
           "text": "your quote in {passage_language} or N/A",
@@ -196,8 +200,8 @@ The quotes must be exact and exact character indices of the quote in the passage
 
 Return your response in the following JSON format. If the question is impossible to fix, return 'N/A'.
 {{
-  "Question": "The improved question in {question_language} or N/A",
-  "Answer": "The improved answer in {answer_language} or N/A",
+  "Question": "The improved question in {passage_language} or N/A",
+  "Answer": "The improved answer in {passage_language} or N/A",
   "Quotes":[
         {{
           "text": "your quote in {passage_language} or N/A",
@@ -230,12 +234,10 @@ Judge Feedback:
 
 
 class QuestionBuilder:
-    def __init__(self, passage, passage_language, question_language, answer_language, country, previous_questions = []):
+    def __init__(self, passage, passage_language, country, previous_questions = []):
         # Set basic attributes first
         self.passage = passage
         self.passage_language = passage_language
-        self.question_language = question_language
-        self.answer_language = answer_language
         self.question_answer_pairs = []
         self.previous_questions = previous_questions
         self.country = country
@@ -252,7 +254,7 @@ class QuestionBuilder:
         
         # Initialize judge with error handling
         try:
-            self.judge = LLMAsAJudge(passage, passage_language, question_language, answer_language, country)
+            self.judge = LLMAsAJudge(passage, passage_language, country)
         except Exception as e:
             print(f"Warning: Failed to initialize LLMAsAJudge: {e}")
             self.judge = None
@@ -262,8 +264,7 @@ class QuestionBuilder:
         chain = easy_initial_prompt | self.llm | JsonOutputParser()
          
         try:
-            res = chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
-                                "question_language": self.question_language, "answer_language": self.answer_language, 
+            res = chain.invoke({"passage": self.passage, "passage_language": self.passage_language,                                 
                                 "previous_questions": self.previous_questions})
         except Exception as e:
             print(e)
@@ -286,7 +287,6 @@ class QuestionBuilder:
       improvement_chain = challenging_improvement_prompt | self.llm | JsonOutputParser()
       try:
           res = initial_chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
-                                      "question_language": self.question_language, "answer_language": self.answer_language, 
                                       "country": self.country})
       except Exception as e:
           print(e)
@@ -347,8 +347,7 @@ class QuestionBuilder:
 
         try:
             res = improvement_chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
-                                            "question_language": self.question_language,
-                                            "answer_language": self.answer_language, "country": self.country,
+                                            "country": self.country,
                                             "original_question": question, "original_answer": answer, 
                                             "original_quotes": quotes,
                                             "judge_feedback": judgement})  
@@ -383,8 +382,6 @@ class QuestionBuilder:
       improvement_chain = moderate_improvement_prompt | self.llm | JsonOutputParser()
       try:
           res = initial_chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
-                                      "question_language": self.question_language, 
-                                      "answer_language": self.answer_language,
                                       "previous_questions": self.previous_questions})
       except Exception as e:
           print(e)
@@ -439,8 +436,6 @@ class QuestionBuilder:
 
         try:
             res = improvement_chain.invoke({"passage": self.passage, "passage_language": self.passage_language, 
-                                            "question_language": self.question_language,
-                                            "answer_language": self.answer_language,
                                             "original_question": question, "original_answer": answer,
                                             "original_quotes": quotes,
                                             "judge_feedback": judgement})  
