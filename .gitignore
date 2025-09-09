@@ -196,3 +196,5 @@ cython_debug/
 *credentials*
 
 *egy_passages*
+
+*logs*.txt

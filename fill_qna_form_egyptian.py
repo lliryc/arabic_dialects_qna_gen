@@ -432,7 +432,7 @@ if __name__ == "__main__":
       
       for i in tqdm(range(5), desc="Building questions"):
           previous_questions = copy.deepcopy(total_results)
-          question_builder = QuestionBuilder(passage, "Egyptian Arabic", "Egypt", previous_questions=previous_questions)
+          question_builder = QuestionBuilder(passage, "Egyptian_Arabic_dialect", "Egypt", previous_questions=previous_questions)
           results = question_builder.build_qna()
           results_str = json.dumps(results, indent=4)
           with open(f"question_logs_egyptian.txt", "a") as log_out:

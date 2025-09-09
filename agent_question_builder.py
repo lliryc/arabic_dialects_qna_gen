@@ -36,13 +36,13 @@ IMPORTANT: The question, answer and quotes must be in {passage_language}. Otherw
 
 Return your response in the following JSON format:
 {{
-  "Question": "your question in {passage_language} or N/A",
-  "Answer": "your answer in {passage_language} or N/A",
+  "Question": "<your question in {passage_language} or N/A>",
+  "Answer": "<your answer in {passage_language} or N/A>",
   "Quotes":[
         {{
-          "text": "your quote in {passage_language} or N/A",
-          "start_char": "the starting character index of the quote in the passage or N/A",
-          "end_char": "the ending character index of the quote in the passage or N/A"
+          "text": "<your quote in {passage_language} or N/A>",
+          "start_char": "<the starting character index of the quote in the passage or N/A>",
+          "end_char": "<the ending character index of the quote in the passage or N/A>"
         }}
   ]
 }}
@@ -88,13 +88,13 @@ Boolean dimensions (True/False):
 
 Return your response in the following JSON format. Keep answer precise, unambiguous and short or you will be penalized $1000 per word. If the question is impossible to fix, return 'N/A'.
 {{
-  "Question": "The improved question in {passage_language} or N/A",
-  "Answer": "The improved precise, unambiguous and short answer in {passage_language} or N/A",
+  "Question": "<The improved question in {passage_language} or N/A>",
+  "Answer": "<The improved precise, unambiguous and short answer in {passage_language} or N/A>",
   "Quotes":[
         {{
-          "text": "your quote in {passage_language} or N/A",
-          "start_char": "the starting character index of the quote in the passage or N/A",
-          "end_char": "the ending character index of the quote in the passage or N/A"
+          "text": "<your quote in {passage_language} or N/A>",
+          "start_char": "<the starting character index of the quote in the passage or N/A>",
+          "end_char": "<the ending character index of the quote in the passage or N/A>"
         }}
   ]
 }}
@@ -140,13 +140,13 @@ Passage:
 
 Return your response in the following JSON format:
 {{
-  "Question": "your question in {passage_language} or N/A",
-  "Answer": "your answer in {passage_language} or N/A",
+  "Question": "<your question in {passage_language} or N/A>",
+  "Answer": "<your answer in {passage_language} or N/A>",
   "Quotes":[
         {{
-          "text": "your quote in {passage_language} or N/A",
-          "start_char": "the starting character index of the quote in the passage or N/A",
-          "end_char": "the ending character index of the quote in the passage or N/A"
+          "text": "<your quote in {passage_language} or N/A>",
+          "start_char": "<the starting character index of the quote in the passage or N/A>",
+          "end_char": "<the ending character index of the quote in the passage or N/A>"
         }}
   ]
 }}
@@ -179,13 +179,13 @@ Passage:
 
 Return your response in the following JSON format:
 {{
-  "Question": "your question in {passage_language} or N/A",
-  "Answer": "your answer in {passage_language} or N/A",
+  "Question": "<your question in {passage_language} or N/A>",
+  "Answer": "<your answer in {passage_language} or N/A>",
   "Quotes":[
         {{
-          "text": "your quote in {passage_language} or N/A",
-          "start_char": "the starting character index of the quote in the passage or N/A",
-          "end_char": "the ending character index of the quote in the passage or N/A"
+          "text": "<your quote in {passage_language} or N/A>",
+          "start_char": "<the starting character index of the quote in the passage or N/A>",
+          "end_char": "<the ending character index of the quote in the passage or N/A>"
         }}
   ]
 }}
@@ -205,13 +205,13 @@ The quotes must be exact and exact character indices of the quote in the passage
 
 Return your response in the following JSON format. If the question is impossible to fix, return 'N/A'.
 {{
-  "Question": "The improved question in {passage_language} or N/A",
-  "Answer": "The improved answer in {passage_language} or N/A",
+  "Question": "<The improved question in {passage_language} or N/A>",
+  "Answer": "<The improved answer in {passage_language} or N/A>",
   "Quotes":[
         {{
-          "text": "your quote in {passage_language} or N/A",
-          "start_char": "the starting character index of the quote in the passage or N/A",
-          "end_char": "the ending character index of the quote in the passage or N/A"
+          "text": "<your quote in {passage_language} or N/A>",
+          "start_char": "<the starting character index of the quote in the passage or N/A>",
+          "end_char": "<the ending character index of the quote in the passage or N/A>"
         }}
   ]
 }}
