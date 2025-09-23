@@ -1492,6 +1492,21 @@ files = [
 ]
 
 [[package]]
+name = "krippendorff"
+version = "0.8.1"
+description = "Fast computation of the Krippendorff's alpha measure."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "krippendorff-0.8.1-py3-none-any.whl", hash = "sha256:afd9ba1adf8866f567abb643312aedc92d39b5b8612f99b68998508e3591c437"},
+    {file = "krippendorff-0.8.1.tar.gz", hash = "sha256:a8f73d87411a69b2ada62ce60573e1b99388bb084c8c0fa7b4d3598edcf3c0be"},
+]
+
+[package.dependencies]
+numpy = ">=1.21,<3"
+
+[[package]]
 name = "langchain"
 version = "0.3.25"
 description = "Building applications with LLMs through composability"
@@ -3899,4 +3914,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "8e2b5e36f3d0b7b37c60387d95ecffc2005bc2011659ce09cb6e540d15cee032"
+content-hash = "e8d560d1971f073d1ebcda6308c11b9c560984951f5c411b99257f915d14879d"

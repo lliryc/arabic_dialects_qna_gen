@@ -1,0 +1,46 @@
+Question,Answer,LLMQuestionDifficulty,IsAnswerCorrect_0,QuestionRelevancy_0,QuestionDifficulty_0,IsAnswerCorrect_1,QuestionRelevancy_1,QuestionDifficulty_1,IsAnswerCorrect_2,QuestionRelevancy_2,QuestionDifficulty_2
+إيه الفرق الجوهري بين رواد السوق الأول وسوق القطار؟,الأول للمحليين والتاني للسياح,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Moderate
+ما طبيعة زيارة المتحدث لأسواق فيتنام؟,سياحية,Moderate,Correct,Relevant,Challenging,Correct,Relevant,Moderate,Incorrect,Relevant,Moderate
+كم تبعد المسافة بين المدينة والسوق الأول الذي زاره المتحدث؟,نص ساعه بره المدينه,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إزاي اكتشاف مواعيد السوق الأول غير خطة المتحدث؟,هيزور سوق تاني ويرجعله,N/A,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Moderate
+إيه نوع المانجا المنتشر في العاصمة هانوي؟,المانجا الصفرا الطويله,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+ما هو الانطباع الأول للمتحدث عن الفاكهة والخضار بالسوق؟,الفاكهه طازه والخضار شكله طازه ، ورايق وخطير بصراحه يعني,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+كم كان سعر فاكهة الجاك فروت في السوق؟,بدولار واحد,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+لماذا قرر المتحدث مغادرة السوق الأول والعودة إليه لاحقا؟,لأنه يعمل ليلا,N/A,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Moderate
+كيف يختلف سعر بعض الفواكه في فيتنام عن بلد المتحدث؟,أرخص بكثير.,Moderate,Correct,Relevant,Challenging,Correct,Relevant,Easy,Correct,Relevant,Moderate
+ما هو الشعور الذي تملك المتحدث عندما أصدرت الثلاجة صوتا لأول مرة؟,الخوف,N/A,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Moderate
+ما الذي سببه صوت الثلاجة للمتحدث؟,الإزعاج,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Easy
+ما هو موقف زوجة المتحدث من صوت التلاجة؟,ده شيء مرفوض تماما,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+من أين عرفت زوجة المتحدث لأول مرة عن صوت الثلاجة؟,من الفيديو ده,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إزاي تجربة المتحدث بتدعم تحليل الخبير للضمان؟,لأنهم لا يقدمون الخدمة.,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Moderate,Incorrect,Relevant,Challenging
+إزاي تجربة المتحدث بتدعم رأي الخبير في الضمان؟,دفع الضمان على الفاضي,Challenging,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Moderate
+وفقا للمتحدث، ما الذي يجب أن يكون من اهتمامات الشركة تجاه العميل؟,سعادته بالمنتج,N/A,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Moderate
+ماذا فعل المتحدث نتيجة لصعوبة تواصله مع الشركة لحل مشكلة الثلاجة؟,بحث على يوتيوب,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Moderate
+ماذا اكتشف المتحدث بخصوص صوت الثلاجة الجديدة؟,ان ده شيء عادي جدا,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إيه نتيجة التعود على المآسي حسب وصف المتحدث؟,تبلد الإحساس,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Challenging
+إيه الدليل اللي قاله المتحدث على نجاح الحرب النفسية؟,تضاؤل التأثر بأعداد الضحايا.,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Challenging
+حسب النص، إيه كان الشعور العام في بداية الحرب؟,الاهتزاز والخوف الشديد.,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Easy
+حسب النص، إيه اللي حصل في لبنان في يوم واحد؟,في يوم واحد في 500 شخص توفوا في لبنان,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إيه الهدف من الحرب النفسية المذكورة؟,قتل الروح وتطبيع الموت.,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Moderate
+من أي جانب هيشرح المتحدث فكرة التعود على المآسي؟,من جانب الخبره بتاعتي اعلاميا,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Moderate
+إيه نتيجة استغلال الأعداء لتعود الناس على المآسي؟,قتل الروح المعنوية.,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Challenging
+ما هدف الحرب النفسية التي ذكرها المتحدث؟,القتل النفسي,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Challenging
+حسب النص، وعي من الذي تم التلاعب به؟,وعي المجتمع.,Moderate,Correct,Relevant,Challenging,Correct,Relevant,Easy,Correct,Relevant,Moderate
+بماذا يعتبر الكافيين على مستوى العالم حسب النص؟,الماده ذات التاثير النفسي الاكثر استخداما في العالم كله,N/A,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+ما هي طبيعة تأثير الكافيين على وظائف المخ حسب النص؟,تأثيره مغير مؤقت.,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Easy
+ما هو متوسط استهلاك الكافيين اليومي على مستوى العالم؟,من 110 مل غرام لي 300 مل غرام,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+كم تبلغ نسبة الكافيين في كوب القهوة العادي المنتشر؟,حوالي 95 مل غرام,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إيه ممكن يحصل لو مستهلك كافيين منتظم وقف فجأة؟,الشعور بالنعاس الشديد,N/A,Correct,Relevant,Challenging,Correct,Relevant,Easy,Correct,Relevant,Moderate
+ما هي العلاقة بين بنية الكافيين الكيميائية والأدينوسين؟,بنيتهما الكيميائية متشابهة,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Easy
+ما هما الناقلان العصبيان اللذان يتأثران عند تثبيط الأدينوسين بفعل الكافيين؟,الأدرينالين والدوبامين.,Challenging,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إيه اللي بيحصل لمستقبلات الأدينوسين عند اللي بيستهلكوا الكافيين بكثرة؟,مستقبلات الادينوسين في الدماغ بتزيد عندهم,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إيه اللي بيحصل لفاعلية الكافيين مع الاستخدام المستمر؟,فاعليتها بتقل,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Easy,Correct,Relevant,Moderate
+كيف يختلف انطباع المتحدث عن سكان شيكاغو عن سمعتها؟,وجد الناس رايقين ومتعاونين,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Moderate
+ما هو الانطباع الذي كونه المتحدث عن شعب شيكاغو والذي يتناقض مع السمعة الشائعة للمدينة؟,شعبها رايق ومتعاون.,N/A,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Moderate
+بماذا يواجه المتحدث الصورة النمطية لشيكاغو؟,بإنجازها المعماري.,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Moderate,Correct,Relevant,Moderate
+إيه الرسالة الضمنية اللي بيقدمها المتحدث عن السفر؟,تحدي الصور النمطية.,Challenging,Correct,Relevant,Challenging,Correct,Relevant,Challenging,Incorrect,Relevant,Moderate
+ما هو الترتيب الاقتصادي لمدينة شيكاغو على مستوى أمريكا؟,ثالث اكبر اقتصاد في امريكا كلها,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+ما هو اسم أغلى شارع في شيكاغو الذي يبيع الماركات العالمية الفاخرة؟,جولد كوست,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy
+إلى أي بلد ينتمي المتحدث الذي يستكشف ثقافات العالم؟,مصر,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Easy
+إيه السمة اللي بتميز رحلات المتحدث حول العالم؟,المغامرة.,Moderate,Correct,Relevant,Moderate,Correct,Relevant,Easy,Correct,Relevant,Moderate
+ما هي حشوة ساندوتش الكرواسان الذي تناوله المتحدث في وجبة الإفطار؟,التونه والزبيب وعليها شيدر من فوق سايحه,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy,Correct,Relevant,Easy

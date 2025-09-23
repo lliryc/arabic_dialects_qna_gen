@@ -31,7 +31,7 @@ SCOPES = [
 
 FOLDER_LINK = "https://drive.google.com/drive/folders/1rt_ICheHx5EKufUQbjgTfVdm4WA7rFw7"
 
-TEMPLATE_ID = "1iySBPqCZMg4-6bjlX3xXTd0o0vKJRfVrfuMJ7IsS3iQ" # Form
+TEMPLATE_ID = "18GDzBq-YU7mGdcysjE6DYwXgAMQZpToa0lQbNT_62bk" # Form
 
 def set_cell_value_with_color(sheet_id, cell, value, color_spans = []):
 
@@ -403,7 +403,7 @@ if __name__ == "__main__":
     
     doc_id = file_ids[0][0]
     
-    for j in range(0, 1):
+    for j in range(0, 5):
     
       tab_info = get_document_tab_names(doc_id)
       

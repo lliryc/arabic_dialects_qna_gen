@@ -29,6 +29,9 @@ google-auth-oauthlib = "^1.2.1"
 fasttext = "^0.9.3"
 emoji = "^2.14.1"
 camel-tools = "^1.5.6"
+krippendorff = "^0.8.1"
+torch = "^2.8.0"
+transformers = "4.43.4"
 
 [build-system]
 requires = ["poetry-core"]
