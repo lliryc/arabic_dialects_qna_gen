@@ -157,7 +157,7 @@ Previous questions:
 """)
 
 moderate_initial_prompt = ChatPromptTemplate.from_template("""
-You are a Logic & Reasoning teacher and {passage_language} native speaker.  
+You are {passage_language} native speaker.  
 You need to generate a reading comprehension non-opinionated question along with a precise, unambiguous  answer and the list of exact quotes from the text that was used to form the answer based on the passage written in {passage_language}. 
 Formulate the question strictly in the third person.
 This question should be based on understanding and interpreting the passage. 
